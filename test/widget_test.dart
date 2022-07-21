@@ -22,7 +22,7 @@ void main() {
     final radio = find.byType(Radio<String>).first;
 
     //initial state:
-    expect(find.text('Котэ'), findsOneWidget);
+    expect(find.text('cat'), findsOneWidget);
     expect(find.text(errorMessage), findsNothing);
     expect(find.byType(Radio<String>), findsNWidgets(3));
 
