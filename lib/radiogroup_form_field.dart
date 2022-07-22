@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum RadioPosition { leading, trailing }
 
 typedef IndexedWidgetValueBuilder<T> = Widget Function(
-    BuildContext context, int index, T? value);
+    BuildContext context, int index, T value);
 
 class RadioGroupFormField<T> extends FormField<RadioGroupData<T>> {
   static const defaultSubmitErrorMessage = 'Please select an option';
@@ -13,7 +13,7 @@ class RadioGroupFormField<T> extends FormField<RadioGroupData<T>> {
     required List<T> itemsList,
     T? initialSelectedItem,
     this.onChanged,
-    IndexedWidgetValueBuilder? itemTitleBuilder,
+    IndexedWidgetValueBuilder<T>? itemTitleBuilder,
     RadioPosition? radioPosition = RadioPosition.trailing,
     WidgetBuilder? errorWidgetBuilder,
     RadioDecoration? radioDecoration,

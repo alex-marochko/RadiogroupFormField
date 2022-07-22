@@ -30,6 +30,7 @@ const pics = [
 const tabs = [
   'default',
   '<double>',
+  '<User>',
   'onChanged',
   'validator',
   'long',
@@ -83,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           DefaultExample(context: context),
           DoubleExample(context: context),
+          UsersExample(context: context),
           OnChangedExample(context: context),
           ValidatorExample(context: context),
           LongExample(context: context),
@@ -525,6 +527,80 @@ class ImagesExample extends StatelessWidget {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
+                    );
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class User {
+  const User(this.id, this.login, this.name);
+
+  final int id;
+  final String login;
+  final String name;
+
+  @override
+  String toString() {
+    return 'User{id: $id, login: $login, name: $name}';
+  }
+}
+
+const users = [
+  User(1, 'john', 'John Smith'),
+  User(2, 'barbara', 'Barbara Smith'),
+  User(3, 'alien', 'Robert Martianovich'),
+];
+
+class UsersExample extends StatelessWidget {
+  UsersExample({Key? key, required this.context}) : super(key: key);
+
+  final BuildContext context;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController textController = TextEditingController();
+  User? _selectedUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const Center(
+                child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                "Best name for alien is:",
+                style: TextStyle(fontSize: 18),
+              ),
+            )),
+            Flexible(
+              child: RadioGroupFormField<User>(
+                itemsList: users,
+                itemTitleBuilder: (context, index, user) => Text(user.name),
+                onChanged: (data) {
+                  _selectedUser = data.selectedItem;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                key: const Key('submitButton'),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Processing Data: $_selectedUser')),
                     );
                   }
                 },
